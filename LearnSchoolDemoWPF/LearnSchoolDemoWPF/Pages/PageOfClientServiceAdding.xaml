@@ -1,0 +1,59 @@
+﻿<Page x:Class="LearnSchoolDemoWPF.Pages.PageOfClientServiceAdding"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LearnSchoolDemoWPF.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Запись клиента на услугу">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="6*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel  Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <Image Source="/Услуги школы\school_logo.png" Width="50" Height="50"/>
+        </StackPanel>
+        <StackPanel  Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label Content="Запись клиента на услугу"></Label>
+        </StackPanel>
+        <StackPanel  Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Content="Назад" Click="BackButton"></Button>
+        </StackPanel>
+        <ScrollViewer Grid.Row="1" Grid.Column="1">
+            <StackPanel Grid.Row="1" Grid.Column="1">
+                <Label>Название</Label>
+                <TextBlock x:Name="TxtTitle" ></TextBlock>
+                <Label>Длительность</Label>
+                <TextBlock x:Name="TxtDuration" ></TextBlock>
+                <Label>Клиенты</Label>
+                <ComboBox x:Name="ClientsComboBox" ItemsSource="{Binding Client}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=FirstName}"/>
+                                <TextBlock Text="{Binding Path=LastName}"/>
+                                <TextBlock Text="{Binding Path=Patronymic}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Label>Дата</Label>
+                <DatePicker x:Name="Date"></DatePicker>
+                <Label>Время</Label>
+                <TextBox x:Name="Time" Text="{Binding TimeForNow, StringFormat={}{{HH:mm}}}"></TextBox>
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel Grid.Row="2" Grid.Column="1">
+            <Button Content="Сохранить" Click="SavingButton"></Button>
+        </StackPanel>
+    </Grid>
+</Page>
