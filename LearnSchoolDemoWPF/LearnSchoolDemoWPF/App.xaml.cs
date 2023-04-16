@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace LearnSchoolDemoWPF
 {
@@ -16,5 +17,6 @@ namespace LearnSchoolDemoWPF
     {
         public static LearnSchoolDemoEntities Connection = new LearnSchoolDemoEntities();
         public static bool isAuth = false;
+        public static DispatcherTimer dispatcherTimer = new DispatcherTimer();
     }
 }

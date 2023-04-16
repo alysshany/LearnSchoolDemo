@@ -59,27 +59,23 @@ namespace LearnSchoolDemoWPF.Pages
 
         private void DeletingService(object sender, RoutedEventArgs e)
         {
-            if (ListOfServices.SelectedItems.Count == 1)
+            try
             {
-                var service = ListOfServices.SelectedItem as Service;
-
-                try
+                if (MessageBox.Show("Вы действительно хотите удалить услугу?", "", MessageBoxButton.YesNo,
+                    MessageBoxImage.Question) == MessageBoxResult.Yes) 
                 {
+                    Button button = sender as Button;
+                    Service service = button.DataContext as Service;
                     App.Connection.Service.Remove(service);
                     App.Connection.SaveChanges();
                     MessageBox.Show("Удалено");
                     this.NavigationService.Navigate(new PageWithListOfServiceOfAdmin());
                 }
-                catch 
-                {
-                    MessageBox.Show("Нельзя удалить");
-                }
             }
-            else
+            catch 
             {
-                MessageBox.Show("Выберите услугу для удаления");
+                MessageBox.Show("Нельзя удалить");
             }
-
         }
 
         private void ButtonToAddNewService(object sender, RoutedEventArgs e)
@@ -89,30 +85,15 @@ namespace LearnSchoolDemoWPF.Pages
 
         private void EditingService(object sender, RoutedEventArgs e)
         {
-            if (ListOfServices.SelectedItems.Count == 1)
-            {
-                var service = ListOfServices.SelectedItem as Service;
-                
-                this.NavigationService.Navigate(new PageOfEditingService(service));
-            }
-            else
-            {
-                MessageBox.Show("Выберите услугу для изменения");
-            }
+            Button button = sender as Button;
+            Service service = button.DataContext as Service;
+            this.NavigationService.Navigate(new PageOfEditingService(service));
         }
 
         private void ButtonToViewUpComing(object sender, RoutedEventArgs e)
         {
-            if (ListOfServices.SelectedItems.Count == 1)
-            {
-                var service = ListOfServices.SelectedItem as Service;
 
-                this.NavigationService.Navigate(new PageOfUpComing(service));
-            }
-            else
-            {
-                MessageBox.Show("Выберите услугу");
-            }
+            this.NavigationService.Navigate(new PageOfUpComing());
         }
 
         private void AddClient(object sender, RoutedEventArgs e)

@@ -28,7 +28,7 @@
         <ScrollViewer Grid.Row="1" Grid.Column="1">
             <StackPanel Grid.Row="1" Grid.Column="1">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <Image Source="{Binding MainImageByte}" Width="200" Height="140" HorizontalAlignment="Left"/>
+                    <Image x:Name="image" Source="{Binding MainImageByte}" Width="200" Height="140" HorizontalAlignment="Left"/>
                     <StackPanel>
                         <Label>Название</Label>
                         <TextBox x:Name="TxtTitle" Text="{Binding Title}"></TextBox>
@@ -45,7 +45,22 @@
                 <Label>Картинка</Label>
                 <Button x:Name="SelectButton" Content="Выбрать картинку" Click="ChoosingImage"></Button>
 
-                
+                <StackPanel>
+                    <TextBlock Text="Дополнительные изображения"/>
+                    <ListView HorizontalContentAlignment="Stretch" x:Name="ListOfImages">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding PhotoByte}" Width="150" Height="150"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="Добавить новую картинку" Click="ChoosingOtherImages"/>
+                        <Button Content="Удалить картинку" Click="DeletingImage"/>
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
         <StackPanel  Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">

@@ -30,7 +30,6 @@
         </StackPanel>
         <ScrollViewer Grid.Row="1" Grid.Column="1">
             <StackPanel Grid.Row="1" Grid.Column="2">
-
                 <ListView x:Name="ListOfClientServices">
                     <ListView.ItemTemplate >
                         <DataTemplate>
@@ -39,32 +38,38 @@
                                     <ColumnDefinition ></ColumnDefinition>
                                     <ColumnDefinition ></ColumnDefinition>
                                     <ColumnDefinition ></ColumnDefinition>
+                                    <ColumnDefinition ></ColumnDefinition>
+                                    <ColumnDefinition ></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0">
+                                <StackPanel Grid.Column="1" Background="{Binding ServiceClientColor}">
                                     <Label>Наименование</Label>
-                                    <TextBlock Text="{Binding Service.Title}"></TextBlock>
+                                    <TextBlock Text="{Binding Service.Title}" FontSize="9"></TextBlock>
                                     <Label>Фамилия клиента</Label>
-                                    <TextBlock Text="{Binding Client.FirstName}"></TextBlock>
-                                </StackPanel>
-                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="{Binding Client.FirstName}" FontSize="9"></TextBlock>
+                                </StackPanel >
+                                <StackPanel Grid.Column="2" Background="{Binding ServiceClientColor}">
                                     <Label>Имя клиента</Label>
-                                    <TextBlock Text="{Binding Client.LastName}"></TextBlock>
+                                    <TextBlock Text="{Binding Client.LastName}" FontSize="9"></TextBlock>
                                     <Label>Отчество клиента</Label>
-                                    <TextBlock Text="{Binding Client.Patronymic}"></TextBlock>
+                                    <TextBlock Text="{Binding Client.Patronymic}" FontSize="9"></TextBlock>
                                 </StackPanel>
-                                <StackPanel Grid.Column="2">
+                                <StackPanel Grid.Column="3" Background="{Binding ServiceClientColor}">
                                     <Label>Почта клиента</Label>
-                                    <TextBlock Text="{Binding Client.Email}"></TextBlock>
+                                    <TextBlock Text="{Binding Client.Email}" FontSize="9"></TextBlock>
                                     <Label>Номер клиента</Label>
-                                    <TextBlock Text="{Binding Client.Phone}"></TextBlock>
+                                    <TextBlock Text="{Binding Client.Phone}" FontSize="9"></TextBlock>
                                 </StackPanel>
-
+                                <StackPanel Grid.Column="4" Background="{Binding ServiceClientColor}">
+                                    <Label>Время начала</Label>
+                                    <TextBlock Text="{Binding StartTime}" FontSize="9"></TextBlock>
+                                    <Label>Время до приема</Label>
+                                    <TextBlock Text="{Binding TimeLeftString}" FontSize="9"></TextBlock>
+                                </StackPanel>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
-
         </ScrollViewer>
     </Grid>
 </Page>

@@ -26,7 +26,6 @@ namespace LearnSchoolDemoWPF.Pages
     public partial class PageOfEditingService : Page
     {
         public bool editing = false;
-        public byte[] Images { get; set; }
         public Service Service { get; set; }
         public string imagePath;
         
@@ -35,6 +34,7 @@ namespace LearnSchoolDemoWPF.Pages
             InitializeComponent();
             Service = service;
             DataContext = Service;
+            ListOfImages.ItemsSource = App.Connection.ServicePhoto.Where(z => z.Service.ID == Service.ID).ToList();
         }
 
         private void BackButton(object sender, RoutedEventArgs e)
@@ -50,18 +50,42 @@ namespace LearnSchoolDemoWPF.Pages
         {
             try
             {
-
-                var btnSelect = (Button)sender;
                 OpenFileDialog dialog = new OpenFileDialog();
                 if (dialog.ShowDialog() != null)
                 {
-                    Images = System.IO.File.ReadAllBytes(dialog.FileName);
+                    Service.MainImageByte = System.IO.File.ReadAllBytes(dialog.FileName);
+                    image.Source = new BitmapImage(new Uri(dialog.FileName));
                 }
-                btnSelect.Background = Brushes.Gray;
+
+                MessageBox.Show("Успешно добавлено");
             }
-            catch { }
+            catch 
+            {
+                MessageBox.Show("Ошибка");
+            }
         }
 
+        private void ChoosingOtherImages(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog dialog = new OpenFileDialog();
+                if (dialog.ShowDialog() != null)
+                {
+                   var imageByte = System.IO.File.ReadAllBytes(dialog.FileName);
+
+                    Service.ServicePhoto.Add(new ServicePhoto { Service = Service, PhotoByte = imageByte});
+                    ListOfImages.ItemsSource = null;
+                    ListOfImages.ItemsSource = Service.ServicePhoto.ToList();
+
+                    MessageBox.Show("Успешно добавлено");
+                }
+            }
+            catch 
+            {
+                MessageBox.Show("Ошибка");
+            }
+        }
 
         private void SavingButton(object sender, RoutedEventArgs e)
         {
@@ -69,13 +93,42 @@ namespace LearnSchoolDemoWPF.Pages
             {
                 if (Service.ID == 0)
                 {
-                    Service.MainImageByte = Images;
                     App.Connection.Service.Add(Service);
                 }
                 
                 App.Connection.SaveChanges();
 
-                MessageBox.Show("Успешно");
+                MessageBox.Show("Успешно сохранено");
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка");
+            }
+        }
+
+        private void DeletingImage(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (ListOfImages.SelectedItems.Count == 1)
+                {
+                    var servicePhoto = ListOfImages.SelectedItem as ServicePhoto;
+
+                    if (MessageBox.Show("Вы действительно хотите удалить изображение?", "", MessageBoxButton.YesNo,
+                        MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        App.Connection.ServicePhoto.Remove(servicePhoto);
+                        App.Connection.SaveChanges();
+                        MessageBox.Show("Удалено");
+
+                        ListOfImages.ItemsSource = null;
+                        ListOfImages.ItemsSource = Service.ServicePhoto.ToList();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Выберите изображение");
+                }
             }
             catch
             {

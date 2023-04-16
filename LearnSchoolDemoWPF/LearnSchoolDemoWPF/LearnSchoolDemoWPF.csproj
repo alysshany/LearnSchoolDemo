@@ -101,6 +101,7 @@
     <Compile Include="ADOApp\Manufacturer.cs">
       <DependentUpon>LearnSchoolModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ADOApp\PartialClass\ClientService.cs" />
     <Compile Include="ADOApp\PartialClass\Service.cs" />
     <Compile Include="ADOApp\Product.cs">
       <DependentUpon>LearnSchoolModel.tt</DependentUpon>

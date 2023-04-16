@@ -21,15 +21,30 @@ namespace LearnSchoolDemoWPF.Pages
     /// </summary>
     public partial class PageOfUpComing : Page
     {
-        public PageOfUpComing(Service service)
+        public PageOfUpComing()
         {
             InitializeComponent();
-            ListOfClientServices.ItemsSource = App.Connection.ClientService.Where(z => z.Service.Title == service.Title && (z.StartTime.Year == DateTime.Today.Year && z.StartTime.Month == DateTime.Today.Month && z.StartTime.Day == DateTime.Today.Day)).ToList();
+
+            ListOfClientServices.ItemsSource = App.Connection.ClientService.ToList().Where(z =>
+            (z.StartTime.Year == DateTime.Today.Year && z.StartTime.Month == DateTime.Today.Month && z.StartTime.Day == DateTime.Today.Day && z.StartTime.TimeOfDay >= DateTime.Now.TimeOfDay) ||
+            (z.StartTime.Year == DateTime.Today.Year && z.StartTime.Month == DateTime.Today.Month && z.StartTime.Day == DateTime.Now.AddDays(1).Day)).ToList();
+
+            App.dispatcherTimer.Tick += new EventHandler(DispatcherTimer_Tick); 
+            App.dispatcherTimer.Interval = new TimeSpan(0, 0, 30);
+            App.dispatcherTimer.Start();
+            
         }
 
         private void BackButton(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new PageWithListOfServiceOfAdmin());
+        }
+
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            ListOfClientServices.ItemsSource = null;
+            ListOfClientServices.ItemsSource = App.Connection.ClientService.Where(z =>
+            (z.StartTime.Year == DateTime.Today.Year && z.StartTime.Month == DateTime.Today.Month && z.StartTime.Day == DateTime.Today.Day && z.StartTime.Hour >= DateTime.Now.Hour && z.StartTime.Minute >= DateTime.Now.Minute)).ToList();
         }
     }
 }

@@ -48,7 +48,7 @@
                 </ComboBox>
                 <Label>Дата</Label>
                 <DatePicker x:Name="Date"></DatePicker>
-                <Label>Время</Label>
+                <Label>Время (формат hh:mm)</Label>
                 <TextBox x:Name="Time" Text="{Binding TimeForNow, StringFormat={}{{HH:mm}}}"></TextBox>
             </StackPanel>
         </ScrollViewer>
